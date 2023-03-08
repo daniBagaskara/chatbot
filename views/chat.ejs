@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .chat {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            background-color: #0099ff;
+            color: white;
+            padding: 10px;
+        }
+
+        .chat-header h2 {
+            margin: 0;
+        }
+
+        .chat-body {
+            flex: 1;
+            overflow-y: scroll;
+            padding: 10px;
+        }
+
+        .message-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+        }
+
+        .other {
+            background-color: #e6e6e6;
+            align-self: flex-start;
+        }
+
+        .self {
+            background-color: #0099ff;
+            color: white;
+            align-self: flex-end;
+        }
+
+        .chat-footer {
+            display: flex;
+            align-items: center;
+            background-color: #f2f2f2;
+            padding: 10px;
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            margin-right: 10px;
+        }
+
+        .send-button {
+            background-color: #0099ff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .send-button:hover {
+            background-color: #007acc;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="chat">
+        <div class="chat-header">
+            <h2>Chat</h2>
+        </div>
+        <div class="chat-body">
+            <div class="message-container">
+                <div class="message other">Hello</div>
+                <div class="message self">Hi</div>
+            </div>
+        </div>
+        <div class="chat-footer">
+            <input type="text" class="message-input" placeholder="Type a message" />
+            <button class="send-button"><i class="fa fa-paper-plane"></i></button>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+    <script src="/js/chat.js"></script>
+</body>
+
+</html>
