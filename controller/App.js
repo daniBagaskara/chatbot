@@ -22,15 +22,15 @@ class App {
             userId: req.body.token,
         }, process.env.jwt_secret_key, { expiresIn: '4m' });
 
+        res.cookie('token', token, { httpOnly: true, maxAge: 60 * 60 * 1000 }); // cookie akan kadaluarsa dalam 1 jam
         res.status(200).json({
             status: true,
-            message: 'login Success',
-            token: token,
+            message: 'login Success'
         });
     }
 
     chat(req, res) {
-        console.log(req.user);
+        console.log(req);
         const data = {
             title: 'Login Page',
             message: 'Welcome to our website!'
