@@ -5,7 +5,6 @@ const secretKey = process.env.jwt_secret_key;
 function jwtAuth() {
     return async (req, res, next) => {
         const token = req.cookies.token;
-        console.log(req);
         if (!token) {
           return res.redirect('/');
         }

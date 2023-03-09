@@ -1,5 +1,6 @@
 const path = require('path');
 const jwt = require('jsonwebtoken');
+const { env } = require('process');
 require('dotenv').config();
 
 class App {
@@ -11,9 +12,8 @@ class App {
         res.render(path.join(__dirname, '../views/index.ejs'), data);
     }
 
-
     login(req, res) {
-        if (req.body.token !== 'jfqfqo9ijf093fhekfj;alfsk') {
+        if (req.body.token !== process.env.TOKEN_LOGIN) {
             return res.status(401).json({ message: 'Invalid token' });
         }
 
@@ -22,7 +22,7 @@ class App {
             userId: req.body.token,
         }, process.env.jwt_secret_key, { expiresIn: '4m' });
 
-        res.cookie('token', token, { httpOnly: true, maxAge: 60 * 60 * 1000 }); // cookie akan kadaluarsa dalam 1 jam
+        res.cookie('token', token, { httpOnly: true, maxAge: 5 * 60 * 1000 });
         res.status(200).json({
             status: true,
             message: 'login Success'
@@ -30,12 +30,16 @@ class App {
     }
 
     chat(req, res) {
-        console.log(req);
         const data = {
             title: 'Login Page',
             message: 'Welcome to our website!'
         };
         res.render(path.join(__dirname, '../views/chat.ejs'), data);
+    }
+
+    destroy(req,res){
+        res.clearCookie('token');
+        res.send('Cookie berhasil dihapus!');
     }
 }
 const object = new App();
