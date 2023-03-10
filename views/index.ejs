@@ -20,7 +20,7 @@
             <div class="col-sm-6">
                 <div class="card shadow">
                     <div class="card-header bg-primary text-light">
-                        Login
+                        JOIN
                     </div>
                     <div class="card-body">
                         <form id="form-login">
@@ -47,17 +47,17 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        function getCookie(name) {
-            const value = `; ${document.cookie}`;
-            const parts = value.split(`; ${name}=`);
-            if (parts.length === 2) {
-                return parts.pop().split(';').shift();
-            }
-        }
+        const baseUrl = '<%= baseUrl %>'; 
 
         const form = document.getElementById('form-login');
-
+        document.addEventListener("DOMContentLoaded", function() {
+            Swal.fire({
+                title: "Uji Coba terbatas",
+                icon: 'info',
+            })
+        });
         form.addEventListener('submit', function (e) {
             e.preventDefault();
 
@@ -67,13 +67,18 @@
             };
 
             if (form.username.value && form.token.value) {
-                axios.post('http://localhost:3000/login', data)
+                axios.post(baseUrl +'/login', data)
                     .then(function (response) {
                         if(response.data.message == 'login Success'){
                             window.location.replace('/chat');
                         }
                     }).catch(function (error) {
-                        console.log(error.data);
+                        if(error.response.data.message == 'Invalid token'){
+                            Swal.fire({
+                                icon: 'error',
+                                title: "TOKEN SALAH",
+                            })
+                        }
                     });
             }
         });
