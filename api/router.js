@@ -5,6 +5,8 @@ const jwtAuth = require("../middleware/jwtauth.js");
 router.get('/', App.index);
 router.post('/login', App.login);
 router.get('/chat', jwtAuth(), App.chat);
+router.get('/destroy', jwtAuth(), App.destroy);
+router.post('/prompt', jwtAuth(), App.prompt);
 
 router.all('*', (req, res) => {
     res.status(404).send('404: Page not found');

@@ -18,12 +18,11 @@
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-sm-6">
-                <div class="card">
+                <div class="card shadow">
                     <div class="card-header bg-primary text-light">
-                        Login
+                        JOIN
                     </div>
                     <div class="card-body">
-                        <!-- <h5 class="card-title bg-info">Login</h5> -->
                         <form id="form-login">
                             <div class="mb-3">
                                 <label for="username" class="form-label">Username</label>
@@ -48,9 +47,17 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        const form = document.getElementById('form-login');
+        const baseUrl = '<%= baseUrl %>'; 
 
+        const form = document.getElementById('form-login');
+        document.addEventListener("DOMContentLoaded", function() {
+            Swal.fire({
+                title: "Uji Coba terbatas",
+                icon: 'info',
+            })
+        });
         form.addEventListener('submit', function (e) {
             e.preventDefault();
 
@@ -60,12 +67,18 @@
             };
 
             if (form.username.value && form.token.value) {
-                axios.post('http://localhost:3000/login', data)
-                    .then(function name(respomse) {
-                        console.log(respomse);
-
+                axios.post(baseUrl +'/login', data)
+                    .then(function (response) {
+                        if(response.data.message == 'login Success'){
+                            window.location.replace('/chat');
+                        }
                     }).catch(function (error) {
-                        console.log(error.data);
+                        if(error.response.data.message == 'Invalid token'){
+                            Swal.fire({
+                                icon: 'error',
+                                title: "TOKEN SALAH",
+                            })
+                        }
                     });
             }
         });
